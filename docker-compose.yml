@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  backend:
+    image: trackprices-backend:1.0
+    container_name: trackprices-backend
+    ports:
+      - "5215:5215"
+    environment:
+      ASPNETCORE_URLS: "http://+:5215"
+      ConnectionStrings__Default: ""
+      Jwt__Key: ""
+    networks:
+      - app-network
+
+  frontend:
+    image: trackprices-frontend:1.1
+    container_name: trackprices-frontend
+    ports:
+      - "3000:80"
+    environment:
+      REACT_APP_API_URL: "http://backend:5215"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

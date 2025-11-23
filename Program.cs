@@ -11,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 string jwtKey = builder.Configuration["Jwt:Key"]!;
 
 // DB
+var connectionString = builder.Configuration.GetConnectionString("Default");
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
 
